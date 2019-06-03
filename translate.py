@@ -80,7 +80,6 @@ def main():
 
     input_tensor, target_tensor, inp_lang, targ_lang, max_length_inp, max_length_targ = load_dataset(model_info['DATASET'], model_info['DSS'])
 
-    print(inp_lang.word2idx)
     evaluate("vuela", encoder, decoder, inp_lang, targ_lang, max_length_inp, max_length_targ)
 
     encoder.load_weights('encoder')
