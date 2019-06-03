@@ -6,7 +6,7 @@ for spanish to english translation. This is the initial version so there're some
 
 to train use:
 
-´´´
+```
 usage: training.py [-h] [-b BATCH_SIZE] [--emb_dim EMBEDDING_DIM]
                    [--units UNITS] [--dataset_size NUM_EXAMPLES]
                    [--epochs EPOCHS] [--seq_max_len SEQ_MAX_LEN]
@@ -25,13 +25,14 @@ optional arguments:
   --epochs EPOCHS       number of epochs
   --seq_max_len SEQ_MAX_LEN
                         maximun length of the input sequence
-´´´
+
+```
 
 ## Translation
 
 once you've trained for translating phrases use:
 
-´´´
+```
 usage: translate.py [-h] [-p] in_seq
 
 Translator tester
@@ -42,6 +43,7 @@ positional arguments:
 optional arguments:
   -h, --help           show this help message and exit
   -p, --plot_atention  plot attention grid
-´´´
+
+```
 
 
