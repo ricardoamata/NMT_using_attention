@@ -14,11 +14,11 @@ def gru(units):
                                recurrent_initializer='glorot_uniform')
 
 class Encoder(tf.keras.Model):
-    def __init__(self, vocab_size, embedding_dim, enc_units, batch_sz):
+    def __init__(self, vocab_size, embedding_dim, enc_units, batch_sz, max_seq_len):
         super(Encoder, self).__init__()
         self.batch_sz = batch_sz
         self.enc_units = enc_units
-        self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim, input_shape=(3000,))
+        self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim, input_shape=(max_seq_len,))
         self.gru = gru(self.enc_units)
         
     def call(self, x, hidden):
@@ -30,11 +30,11 @@ class Encoder(tf.keras.Model):
         return tf.zeros((self.batch_sz, self.enc_units))
 
 class Decoder(tf.keras.Model):
-    def __init__(self, vocab_size, embedding_dim, dec_units, batch_sz):
+    def __init__(self, vocab_size, embedding_dim, dec_units, batch_sz, max_seq_len):
         super(Decoder, self).__init__()
         self.batch_sz = batch_sz
         self.dec_units = dec_units
-        self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim, input_shape=(3000,))
+        self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim, input_shape=(max_seq_len,))
         self.gru = gru(self.dec_units)
         self.fc = tf.keras.layers.Dense(vocab_size)
         

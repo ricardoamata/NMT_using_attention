@@ -75,12 +75,12 @@ def main():
 
     model_info = json.load(open('model_info.json', 'r', encoding='UTF-8'))
 
-    encoder = Encoder(model_info['VIS'], model_info['ED'], model_info['UNITS'], model_info['BZ'])
-    decoder = Decoder(model_info['VTS'], model_info['ED'], model_info['UNITS'], model_info['BZ'])
+    encoder = Encoder(model_info['VIS'], model_info['ED'], model_info['UNITS'], model_info['BZ'], model_info['MAX_SEQ_LEN'])
+    decoder = Decoder(model_info['VTS'], model_info['ED'], model_info['UNITS'], model_info['BZ'], model_info['MAX_SEQ_LEN'])
 
     input_tensor, target_tensor, inp_lang, targ_lang, max_length_inp, max_length_targ = load_dataset(model_info['DATASET'], model_info['DSS'])
 
-    evaluate("vuela", encoder, decoder, inp_lang, targ_lang, max_length_inp, max_length_targ)
+    evaluate("ve", encoder, decoder, inp_lang, targ_lang, max_length_inp, max_length_targ)
 
     encoder.load_weights('encoder')
     decoder.load_weights('decoder')

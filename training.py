@@ -47,18 +47,15 @@ def main():
     input_tensor_train, input_tensor_val, target_tensor_train, target_tensor_val = train_test_split(input_tensor, target_tensor, test_size=0.2)
 
     BUFFER_SIZE = len(input_tensor_train)
-    BATCH_SIZE = args.batch_size
-    N_BATCH = BUFFER_SIZE//BATCH_SIZE
-    embedding_dim = args.embedding_dim
-    units = args.units
+    N_BATCH = BUFFER_SIZE//args.batch_size
     vocab_inp_size = len(inp_lang.word2idx)
     vocab_tar_size = len(targ_lang.word2idx)
 
     dataset = tf.data.Dataset.from_tensor_slices((input_tensor_train, target_tensor_train)).shuffle(BUFFER_SIZE)
-    dataset = dataset.batch(BATCH_SIZE, drop_remainder=True)
+    dataset = dataset.batch(args.batch_size, drop_remainder=True)
 
-    encoder = Encoder(vocab_inp_size, embedding_dim, units, BATCH_SIZE)
-    decoder = Decoder(vocab_tar_size, embedding_dim, units, BATCH_SIZE)
+    encoder = Encoder(vocab_inp_size, args.embedding_dim, args.units, args.batch_size, args.seq_max_len)
+    decoder = Decoder(vocab_tar_size, args.embedding_dim, args.units, args.batch_size, args.seq_max_len)
 
     optimizer = tf.train.AdamOptimizer()
 
@@ -84,7 +81,7 @@ def main():
             with tf.GradientTape() as tape:
                 enc_output, enc_hidden = encoder(inp, hidden)
                 dec_hidden = enc_hidden
-                dec_input = tf.expand_dims([targ_lang.word2idx['<start>']] * BATCH_SIZE, 1)       
+                dec_input = tf.expand_dims([targ_lang.word2idx['<start>']] * args.batch_size, 1)       
                 
                 for t in range(1, targ.shape[1]):
                     predictions, dec_hidden, _ = decoder(dec_input, dec_hidden, enc_output)
@@ -114,11 +111,12 @@ def main():
     model_info = {
         'VIS': vocab_inp_size, 
         'VTS': vocab_tar_size, 
-        'ED': embedding_dim, 
-        'UNITS': units, 
-        'BZ': BATCH_SIZE,
+        'ED': args.embedding_dim, 
+        'UNITS': args.units, 
+        'BZ': args.batch_size,
         'DATASET': path_to_file,
-        'DSS': num_examples
+        'DSS': num_examples,
+        'MAX_SEQ_LEN': args.max_seq_len
     }
     
     with open('model_info.json', 'w') as outfile:

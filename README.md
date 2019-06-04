@@ -1,5 +1,5 @@
 # NMT_using_attention
-seq2seq model with attention layer implementation from [tensorflow](https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/contrib/eager/python/examples/nmt_with_attention/nmt_with_attention.ipynb)
+seq2seq model with attention layer, code implementation from [tensorflow](https://github.com/tensorflow/tensorflow/blob/r1.13/tensorflow/contrib/eager/python/examples/nmt_with_attention/nmt_with_attention.ipynb)
 for spanish to english translation. This is the initial version so there're some bugs to fix and things to improve.
 
 ## Training

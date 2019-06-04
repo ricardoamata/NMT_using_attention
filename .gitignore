@@ -1,0 +1,5 @@
+__pycache__/
+training_checkpoints/
+checkpoint
+encoder.index
+decoder.index
